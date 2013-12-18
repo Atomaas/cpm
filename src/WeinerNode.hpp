@@ -34,10 +34,14 @@ public:
   virtual bool isLeaf();
 private:
   WeinerInode* parent_;
-  bool text_node_; // node corresponds to the text (not only the pattern)
-  int edge_label_start_;
+  bool text_node_;
+  // text_node_ == true iff this node corresponds to the text (not just the pattern).
+  // In other words, text_node_ iff:
+  //   (1) this node was created when the text was inserted into the tree; or
+  //   (2) this node is an ancestor of a node that satisfies (1).
+  int edge_label_start_; // The characters on this node's in-edge.
   int edge_label_length_;
-  int path_label_start_; // path from root to this node
+  int path_label_start_; // The concatenation of all the edge labels on the path from the root to this node.
   int path_label_length_;
 };
 
