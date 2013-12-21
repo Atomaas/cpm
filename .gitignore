@@ -1,5 +1,7 @@
 .DS_Store
 *.d
+c5.fa
+c6.fa
 
 # Compiled Object files
 *.slo
