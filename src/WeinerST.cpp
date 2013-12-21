@@ -27,13 +27,13 @@ namespace cpm {
     //
     text_string_ = s;
     buildBaseTree(s);
-    insertString(true);
+    insertString(true, false);
     text_prev_leaf_ = prev_leaf_;
     //
     assert(text_string_ != "" && text_prev_leaf_ != NULL);
   }
 
-  void WeinerST::insertPattern(std::string &s) {
+  void WeinerST::insertPattern(std::string &s, const bool record_tree_mutations) {
     assert(text_string_ != "" && text_prev_leaf_ != NULL);
     assert(pattern_string_ == "");
     assert(root_->getNumChildren() > 0);
@@ -43,7 +43,7 @@ namespace cpm {
     assert(tree_mutations_.empty());
     //
     pattern_string_ = s;
-    insertString(false);
+    insertString(false, record_tree_mutations);
   }
 
   void WeinerST::removePattern() {
@@ -102,25 +102,25 @@ namespace cpm {
     assert(root_->getNumChildren() > 0);
   }
 
-  void WeinerST::insertString(const bool text_node) {
+  void WeinerST::insertString(const bool text_node, const bool record_tree_mutations) {
     const int m = (text_node ? text_string_.length() : pattern_string_.length());
     // printTree();
     for (int i = m - (text_node ?  2 : 1); i >= 0; i--) {
       // std::cout << i << std::endl;
-      extend(i, text_node);
+      extend(i, text_node, record_tree_mutations);
       // printTree();
     }
   }
 
   // Based on the description of Weiner's algorithm in Gusfield (1997)
-  void WeinerST::extend(int i, const bool text_node) {
+  void WeinerST::extend(int i, const bool text_node, const bool record_tree_mutations) {
     std::string const &s = (text_node ? text_string_ : pattern_string_);
     char c = s[i];
     // Walk up the tree from prev_leaf_ looking for the first node with indicator c.
     WeinerInode* node1 = prev_leaf_->getParent();
     while (node1 != root_ && !node1->checkIndicator(c)) {
       node1->addIndicator(c); // * Tree mutation *
-      if (!text_node) {
+      if (!text_node && record_tree_mutations) {
         tree_mutations_.push(new RemoveCharMut(RemoveIndicator, node1, c));
       }
       node1 = node1->getParent();
@@ -131,7 +131,7 @@ namespace cpm {
       // head(i) ends at the root.
       assert(node1 == root_);
       node1->addIndicator(c); // * Tree mutation *
-      if (!text_node) {
+      if (!text_node && record_tree_mutations) {
         tree_mutations_.push(new RemoveCharMut(RemoveIndicator, node1, c));
       }
       head_node = root_;
@@ -157,9 +157,9 @@ namespace cpm {
         Label child_edge_label = child_node->getEdgeLabel();
         assert(1 <= t && t < child_edge_label.length_);
         // head(i) ends in the middle of the edge.
-        head_node = breakEdge(child_node, c, t, text_node);
+        head_node = breakEdge(child_node, c, t, text_node, record_tree_mutations);
         node1->addLink(c, head_node); // * Tree mutation *
-        if (!text_node) {
+        if (!text_node && record_tree_mutations) {
           tree_mutations_.push(new RemoveCharMut(RemoveLink, node1, c));
         }
       }
@@ -181,9 +181,9 @@ namespace cpm {
           Label child_edge_label = child_node->getEdgeLabel();
           assert(path_length < child_edge_label.length_);
           // head(i) ends in the middle of the edge
-          head_node = breakEdge(child_node, c2, path_length, text_node);
+          head_node = breakEdge(child_node, c2, path_length, text_node, record_tree_mutations);
           node1->addLink(c, head_node); // * Tree mutation *
-          if (!text_node) {
+          if (!text_node && record_tree_mutations) {
             tree_mutations_.push(new RemoveCharMut(RemoveLink, node1, c));
           }
         }
@@ -208,7 +208,7 @@ namespace cpm {
                                           i, s.length() - i,
                                           i); // * Tree mutation *
     head_node->addChild(s[tail_start], new_leaf); // * Tree mutation *
-    if (!text_node) {
+    if (!text_node && record_tree_mutations) {
       tree_mutations_.push(new DeleteNodeMut(new_leaf));
       tree_mutations_.push(new RemoveCharMut(RemoveChild, head_node, s[tail_start]));
     }
@@ -229,7 +229,8 @@ namespace cpm {
   WeinerInode* WeinerST::breakEdge(WeinerNode* const child_node,
                                    char edge_char,
                                    int edge_label_prefix_length,
-                                   const bool text_node) {
+                                   const bool text_node,
+                                   const bool record_tree_mutations) {
     assert(edge_char == getLabelChar(child_node->getEdgeLabel(), 0));
     assert(0 < edge_label_prefix_length && edge_label_prefix_length < child_node->getEdgeLabelLength());
     Label child_edge_label = child_node->getEdgeLabel();
@@ -241,7 +242,7 @@ namespace cpm {
                                             child_edge_label.start_, edge_label_prefix_length,
                                             child_path_label.start_, child_path_label.length_ - child_edge_label.length_ + edge_label_prefix_length);
     new_node->addChild(getLabelChar(child_edge_label, edge_label_prefix_length), child_node);
-    if (!text_node) {
+    if (!text_node && record_tree_mutations) {
       tree_mutations_.push(new DeleteNodeMut(new_node));
     }
     if (child_node->isLeaf()) {
@@ -259,7 +260,7 @@ namespace cpm {
                                    child_edge_label.length_ - edge_label_prefix_length,
                                    child_edge_label.text_));
     parent_node->replaceChild(edge_char, new_node);
-    if (!text_node) {
+    if (!text_node && record_tree_mutations) {
       tree_mutations_.push(new SetParentMut(child_node, parent_node));
       tree_mutations_.push(new SetEdgeLabelMut(child_node, child_edge_label));
       tree_mutations_.push(new ReplaceChildMut(parent_node, edge_char, child_node, new_node));

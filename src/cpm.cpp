@@ -18,7 +18,7 @@ namespace cpm {
     //
     WeinerST st;
     st.insertText(text);
-    st.insertPattern(pattern);
+    st.insertPattern(pattern, false);
     return st.getMatches();
   }
   

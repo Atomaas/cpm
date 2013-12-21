@@ -17,19 +17,20 @@ public:
   WeinerST();
   ~WeinerST();
   void insertText(std::string &s);
-  void insertPattern(std::string &s);
+  void insertPattern(std::string &s, const bool record_tree_mutations = true);
   void removePattern();
   std::set<int> getMatches();
   void printMatches();
   void printTree();
 private:
-  void insertString(const bool text_node);
+  void insertString(const bool text_node, const bool record_tree_mutations);
   void buildBaseTree(std::string &s);
-  void extend(int i, const bool text_node);
+  void extend(int i, const bool text_node, const bool record_tree_mutations);
   WeinerInode* breakEdge(WeinerNode* const child_node,
                          char edge_char,
                          int edge_label_prefix_length,
-                         const bool text_node);
+                         const bool text_node,
+                         const bool record_tree_mutations);
   char getLabelChar(Label label, int i);
   std::string getLabelString(Label label);
   void printTreeTraverse(WeinerNode* const node, int indent);

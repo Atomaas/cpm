@@ -23,19 +23,19 @@ void timeCPM(const int num_trials /* = 1 */) {
   
   std::vector< std::string > text_filepaths;
   text_filepaths.push_back("c5.fa");
-  // text_filepaths.push_back("c6.fa");
+  text_filepaths.push_back("c6.fa");
   
   std::vector< std::string > pattern_filepaths;
   pattern_filepaths.push_back("v1.fas");
-  // pattern_filepaths.push_back("v2.fas");
-  // pattern_filepaths.push_back("v3.fas");
-  // pattern_filepaths.push_back("v4.fas");
-  // pattern_filepaths.push_back("v5.fas");
-  // pattern_filepaths.push_back("v6.fas");
-  // pattern_filepaths.push_back("v7.fas");
-  // pattern_filepaths.push_back("v8.fas");
-  // pattern_filepaths.push_back("v9.fas");
-  // pattern_filepaths.push_back("v10.fas");
+  pattern_filepaths.push_back("v2.fas");
+  pattern_filepaths.push_back("v3.fas");
+  pattern_filepaths.push_back("v4.fas");
+  pattern_filepaths.push_back("v5.fas");
+  pattern_filepaths.push_back("v6.fas");
+  pattern_filepaths.push_back("v7.fas");
+  pattern_filepaths.push_back("v8.fas");
+  pattern_filepaths.push_back("v9.fas");
+  pattern_filepaths.push_back("v10.fas");
 
   std::cout << "text,pattern,matches\n";
 
@@ -63,7 +63,7 @@ void timeCPM(const int num_trials /* = 1 */) {
       t1 = clock();
       double avg_dt = ((double)(t1 - t0)) / CLOCKS_PER_SEC / num_trials;
 
-      std::cout << *iter_t << "," << *iter_p << "," << setToStr(matches) << ", " << avd_dt << "\n";
+      std::cout << *iter_t << "," << *iter_p << "," << setToStr(matches) << ", " << avg_dt << "\n";
     }
   }
 }
