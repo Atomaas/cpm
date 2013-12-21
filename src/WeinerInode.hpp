@@ -7,6 +7,8 @@
 
 #include "WeinerNode.hpp"
 
+namespace cpm {
+
 class WeinerInode : public WeinerNode {
 public:
   WeinerInode(WeinerInode* const parent,
@@ -39,5 +41,7 @@ private:
   std::set<char> indicator_;
   std::map<char, WeinerInode*> links_;
 };
+
+} // namespace cpm
 
 #endif // WEINERINODE_HPP_

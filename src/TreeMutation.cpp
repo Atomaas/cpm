@@ -1,5 +1,8 @@
 #include <cassert>
+
 #include "TreeMutation.hpp"
+
+namespace cpm {
 
 TreeMutation::TreeMutation(MutationOp mutation_op)
   : mutation_op_ (mutation_op) {
@@ -59,3 +62,5 @@ SetParentMut::SetParentMut(WeinerNode* child_node, WeinerInode* parent_node)
     parent_node_ (parent_node) {
   assert(child_node != NULL && parent_node != NULL);
 }
+
+} // namespace cpm

@@ -1,7 +1,10 @@
 #include <iostream>
 #include <sstream>
 #include <cassert>
+
 #include "WeinerInode.hpp"
+
+namespace cpm {
 
 WeinerInode::WeinerInode(WeinerInode* const parent,
                          bool text_node,
@@ -144,3 +147,5 @@ std::string WeinerInode::getLinkString() {
 bool WeinerInode::isLeaf() {
   return false;
 }
+
+} // namespace cpm

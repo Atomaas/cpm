@@ -3,6 +3,8 @@
 
 #include "WeinerNode.hpp"
 
+namespace cpm {
+
 class WeinerLeaf : public WeinerNode {
 public:
   WeinerLeaf(WeinerInode* const parent,
@@ -17,5 +19,7 @@ public:
 private:
   int leaf_id_;
 };
+
+} // namespace cpm
 
 #endif // WEINERLEAF_HPP_

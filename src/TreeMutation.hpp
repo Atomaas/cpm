@@ -4,6 +4,8 @@
 #include "WeinerNode.hpp"
 #include "WeinerInode.hpp"
 
+namespace cpm {
+
 enum MutationOp {DeleteNode, RemoveChild, RemoveIndicator, RemoveLink, ReplaceChild, SetEdgeLabel, SetParent};
 
 struct TreeMutation {
@@ -42,5 +44,7 @@ struct SetParentMut : public TreeMutation {
   WeinerInode* parent_node_;
   SetParentMut(WeinerNode* child_node, WeinerInode* parent_node);
 };
+
+}
 
 #endif // TREEMUTATION_HPP

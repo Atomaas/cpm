@@ -1,5 +1,8 @@
 #include <cassert>
+
 #include "WeinerNode.hpp"
+
+namespace cpm {
 
 WeinerNode::WeinerNode(WeinerInode* const parent,
                        bool text_node,
@@ -58,3 +61,5 @@ bool WeinerNode::isLeaf() {
   assert(false);
   return false;
 }
+
+} // namespace cpm

@@ -1,4 +1,4 @@
-CXX = g++-4.9
+CXX = color-g++-4.9
 CXXFLAGS = -Wall -Wno-deprecated -MMD
 
 VPATH = ../src

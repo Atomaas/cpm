@@ -1,5 +1,8 @@
 #include <cassert>
+
 #include "WeinerLeaf.hpp"
+
+namespace cpm {
 
 WeinerLeaf::WeinerLeaf(WeinerInode* const parent,
                        bool text_node,
@@ -25,3 +28,5 @@ int WeinerLeaf::getLeafId() {
 bool WeinerLeaf::isLeaf() {
   return true;
 }
+
+} // namespace cpm

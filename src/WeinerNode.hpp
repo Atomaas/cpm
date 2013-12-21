@@ -1,6 +1,8 @@
 #ifndef WEINERNODE_HPP_
 #define WEINERNODE_HPP_
 
+namespace cpm {
+
 class WeinerInode;
 
 struct Label {
@@ -44,5 +46,7 @@ private:
   int path_label_start_; // The concatenation of all the edge labels on the path from the root to this node.
   int path_label_length_;
 };
+
+} // namespace cpm
 
 #endif // WEINERNODE_HPP_
