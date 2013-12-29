@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cassert>
 
 #include "cpm.hpp"
@@ -5,17 +6,15 @@
 
 namespace cpm {
 
-  std::set<int> cpm(std::string &text, std::string &pattern) {
-    // add termination character
-    // std::set<char> text_alpha = alphabet(text);
-    // std::set<char> pattern_alpha = alphabet(pattern);
-    // assert(text_alpha.find('$') == text_alpha.end());
-    // assert(text_alpha.find('#') == text_alpha.end());
-    // assert(pattern_alpha.find('$') == pattern_alpha.end());
-    // assert(pattern_alpha.find('#') == pattern_alpha.end());
-    // text.push_back('$');
-    // pattern.push_back('#');
-    //
+  std::set<int> cpm(std::string text, std::string pattern) {
+    std::set<char> text_alpha = alphabet(text);
+    assert(text_alpha.find('$') == text_alpha.end() && text_alpha.find('#') == text_alpha.end());
+    text.push_back('$'); // add termination character
+    std::set<char> pattern_alpha = alphabet(pattern);
+    assert(pattern_alpha.find('$') == pattern_alpha.end() && pattern_alpha.find('#') == pattern_alpha.end());
+    pattern += pattern; // form PP
+    pattern.push_back('#'); // add termination character
+
     WeinerST st;
     st.insertText(text);
     st.insertPattern(pattern, false);
@@ -34,11 +33,11 @@ namespace cpm {
     std::vector< std::set<int> > matches;
     for (std::vector<std::string>::iterator iter = pattern_filepaths.begin(); iter != pattern_filepaths.end(); iter++) {
       std::string pattern = readFile(*iter);
-      // add termination character
       std::set<char> pattern_alpha = alphabet(pattern);
       assert(pattern_alpha.find('$') == pattern_alpha.end() && pattern_alpha.find('#') == pattern_alpha.end());
-      pattern.push_back('#');
-      //
+      pattern += pattern; // form PP
+      pattern.push_back('#'); // add termination character
+
       st.insertPattern(pattern);
       matches.push_back(st.getMatches());
       st.removePattern();

@@ -11,8 +11,6 @@
  */
 
 int main(int argc, char* argv[]) {
-  std::cout << "Circular pattern matching\n";
-
   timeCPM();
 
   // std::string text = "dbcadacadab$";

@@ -106,7 +106,9 @@ namespace cpm {
     const int m = (text_node ? text_string_.length() : pattern_string_.length());
     // printTree();
     for (int i = m - (text_node ?  2 : 1); i >= 0; i--) {
-      // std::cout << i << std::endl;
+      // if (i % 1000000 == 0) {
+      //   std::cout << i << std::endl; // TODO
+      // }
       extend(i, text_node, record_tree_mutations);
       // printTree();
     }

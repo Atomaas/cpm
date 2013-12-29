@@ -2,6 +2,7 @@
 // #include <dirent.h>
 // #include <stack>
 // #include <set>
+#include <algorithm>
 #include <fstream>
 #include <sstream> // ostringstream
 #include <cassert>
@@ -20,6 +21,16 @@ int alphabetSize(const std::string &s) {
   return alphabet(s).size();
 }
 
+std::string intToStr(int n) {
+  std::ostringstream ss;
+  ss << n;
+  return ss.str();
+}
+
+void stripchar(std::string &s, char c) {
+  s.erase(std::remove(s.begin(), s.end(), c), s.end());
+}
+
 std::string readFile(std::string filename) {
   std::ifstream in(filename.c_str(), std::ios::in | std::ios::binary);
   assert(in);
@@ -32,12 +43,6 @@ std::string readFile(std::string filename) {
     in.close();
   }
   return s;
-}
-
-std::string intToStr(int n) {
-  std::ostringstream ss;
-  ss << n;
-  return ss.str();
 }
 
 // bool isFile(std::string path) {
