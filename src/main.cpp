@@ -1,9 +1,11 @@
+#include <set>
 #include <string>
 #include <iostream>
 #include <cassert>
 
 #include "test.hpp"
-// #include "cpm.hpp"
+#include "cpm.hpp"
+#include "cpi2.hpp"
 
 /*
   text = dbcadacadab$
@@ -11,8 +13,17 @@
  */
 
 int main(int argc, char* argv[]) {
-  timeCPM();
-
+  // timeCPM();
+  timeCPI2();
+  
+  // std::set<int> occ;
+  // cpm::Cpi2 x("dbcadacadab");
+  // occ  = x.cmatch("abcad");
+  // std::cout << "Matches:\n";
+  // for (std::set<int>::iterator iter = occ.begin(); iter != occ.end(); iter++) {
+  //   std::cout << *iter << "\n";
+  // }
+  
   // std::string text = "dbcadacadab$";
   // std::string pattern = "abcadabcad#";
   // cpm::WeinerST st;

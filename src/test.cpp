@@ -3,6 +3,7 @@
 #include <cassert>
 #include "test.hpp"
 #include "cpm.hpp"
+#include "cpi2.hpp"
 #include "util.hpp"
 
 std::string setToStr(std::set<int> x) {
@@ -66,6 +67,62 @@ void timeCPM(const int num_trials /* = 1 */) {
       t0 = clock();
       for (int i = 0; i < num_trials; i++) {
         matches = cpm::cpm(text, pattern);
+      }
+      t1 = clock();
+      double avg_dt = ((double)(t1 - t0)) / CLOCKS_PER_SEC / num_trials;
+      std::cout << *iter_t << ", " << *iter_p << ", " << avg_dt << ", " << setToStr(matches) << "\n";
+    }
+  }
+}
+
+void timeCPI2(const int num_trials /* = 1 */) {
+  const std::string test_dir = "../test/test2/";
+  std::vector< std::string > text_filepaths;
+  // text_filepaths.push_back("t1.fas");
+  //
+  // text_filepaths.push_back("t5.fas");
+  // text_filepaths.push_back("t10.fas");
+  // text_filepaths.push_back("t15.fas");
+  // text_filepaths.push_back("t20.fas");
+  // text_filepaths.push_back("t25.fas");
+  text_filepaths.push_back("t30.fas");
+  
+  std::vector< std::string > pattern_filepaths;
+  // pattern_filepaths.push_back("p1.fas");
+  //
+  // pattern_filepaths.push_back("p5a.fas");
+  // pattern_filepaths.push_back("p5b.fas");
+  // pattern_filepaths.push_back("p5c.fas");
+  // pattern_filepaths.push_back("p10a.fas");
+  // pattern_filepaths.push_back("p10b.fas");
+  // pattern_filepaths.push_back("p10c.fas");
+  // pattern_filepaths.push_back("p15a.fas");
+  // pattern_filepaths.push_back("p15b.fas");
+  // pattern_filepaths.push_back("p15c.fas");
+  // pattern_filepaths.push_back("p20a.fas");
+  // pattern_filepaths.push_back("p20b.fas");
+  // pattern_filepaths.push_back("p20c.fas");
+  // pattern_filepaths.push_back("p25a.fas");
+  // pattern_filepaths.push_back("p25b.fas");
+  // pattern_filepaths.push_back("p25c.fas");
+  pattern_filepaths.push_back("p30a.fas");
+  pattern_filepaths.push_back("p30b.fas");
+  pattern_filepaths.push_back("p30c.fas");
+  
+  std::cout << "text, pattern, time, matches\n";
+
+  for (std::vector< std::string >::iterator iter_t = text_filepaths.begin(); iter_t != text_filepaths.end(); iter_t++) {
+    std::string text = readFile(test_dir + *iter_t);
+    stripchar(text, '\n');
+    for (std::vector< std::string >::iterator iter_p = pattern_filepaths.begin(); iter_p != pattern_filepaths.end(); iter_p++) {
+      std::string pattern = readFile(test_dir + *iter_p);
+      std::set<int> matches;
+      
+      clock_t t0 = 0, t1 = 0;
+      t0 = clock();
+      for (int i = 0; i < num_trials; i++) {
+        cpm::Cpi2 x(text);
+        matches = x.cmatch(pattern);
       }
       t1 = clock();
       double avg_dt = ((double)(t1 - t0)) / CLOCKS_PER_SEC / num_trials;

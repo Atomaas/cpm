@@ -24,3 +24,7 @@ c6.fa
 *.exe
 *.out
 *.app
+
+# Python Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
