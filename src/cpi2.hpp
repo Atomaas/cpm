@@ -10,9 +10,9 @@ namespace cpm {
   // Illiopoulos and Rahman - "Indexing circular patterns" (2008).
   class Cpi2 {
   public:
-    Cpi2(std::string text);
+    Cpi2(std::string &text);
     ~Cpi2();
-    std::set<int> cmatch(std::string pattern);
+    std::set<int> cmatch(std::string &pattern);
   private:
     char* text_;
     int n_; // text length

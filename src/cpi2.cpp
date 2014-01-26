@@ -3,6 +3,8 @@
 #include <map>
 #include <iostream>
 #include <cstdlib>
+#include <cstddef>
+#include <cstring>
 #include <cassert>
 
 #include <divsufsort.h>
@@ -145,7 +147,7 @@ namespace cpm {
     return k - j;
   }
 
-  Cpi2::Cpi2(std::string text) {
+  Cpi2::Cpi2(std::string &text) {
     assert(sizeof(char) == sizeof(sauchar_t) && sizeof(int) == sizeof(saidx_t));
     n_ = text.size(); 
     text_ = (char*)malloc((n_ + 1) * sizeof(unsigned char));
@@ -168,7 +170,7 @@ namespace cpm {
   }
 
   // Finds all occurrences of a circular pattern.
-  std::set<int> Cpi2::cmatch(std::string pattern) {
+  std::set<int> Cpi2::cmatch(std::string &pattern) {
     const int m = pattern.size();
     int int_left = 0, int_len = 0; // the start and length of an interval
     int prev_int_left = 0;

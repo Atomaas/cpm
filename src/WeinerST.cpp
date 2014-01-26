@@ -10,7 +10,16 @@ namespace cpm {
       prev_leaf_ (NULL),
       text_prev_leaf_ (NULL),
       text_string_ (""),
-      pattern_string_ ("") { 
+      pattern_string_ ("") {
+  }
+
+  WeinerST::WeinerST(std::string &s)
+    : root_ (NULL),
+      prev_leaf_ (NULL),
+      text_prev_leaf_ (NULL),
+      text_string_ (""),
+      pattern_string_ ("") {
+    insertText(s);
   }
 
   WeinerST::~WeinerST() {

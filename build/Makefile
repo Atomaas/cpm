@@ -1,5 +1,5 @@
 VPATH = ../src
-IDIR = # ../include
+IDIR = #../include
 LDLIBS = -ldivsufsort
 
 CXX = g++
@@ -22,7 +22,7 @@ profile: CXXFLAGS += -O3 -DDEBUG -g
 profile: cpm.out
 
 cpm.out: $(OBJ_FILES)
-	$(CXX) $(CXXFLAGS) $(LDLIBS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDLIBS)
 
 clean:
 	rm -f *.o *.d cpm.out

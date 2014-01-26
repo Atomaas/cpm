@@ -15,6 +15,7 @@ namespace cpm {
 class WeinerST {
 public:
   WeinerST();
+  WeinerST(std::string &s);
   ~WeinerST();
   void insertText(std::string &s);
   void insertPattern(std::string &s, const bool record_tree_mutations = true);

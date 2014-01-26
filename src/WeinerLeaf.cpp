@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <cassert>
 
 #include "WeinerLeaf.hpp"

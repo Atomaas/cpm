@@ -78,21 +78,41 @@ void timeCPM(const int num_trials /* = 1 */) {
 void timeCPI2(const int num_trials /* = 1 */) {
   const std::string test_dir = "../test/test2/";
   std::vector< std::string > text_filepaths;
+  // Test 0
   // text_filepaths.push_back("t1.fas");
   //
-  // text_filepaths.push_back("t5.fas");
+  // Test 1
+  // text_filepaths.push_back("c5.fa");
+  // text_filepaths.push_back("c6.fa");
+  //
+  // Test 2
+  text_filepaths.push_back("t5.fas");
   // text_filepaths.push_back("t10.fas");
   // text_filepaths.push_back("t15.fas");
   // text_filepaths.push_back("t20.fas");
   // text_filepaths.push_back("t25.fas");
-  text_filepaths.push_back("t30.fas");
+  // text_filepaths.push_back("t30.fas");
   
   std::vector< std::string > pattern_filepaths;
+  // Test 0
   // pattern_filepaths.push_back("p1.fas");
   //
-  // pattern_filepaths.push_back("p5a.fas");
-  // pattern_filepaths.push_back("p5b.fas");
-  // pattern_filepaths.push_back("p5c.fas");
+  // Test 1
+  // pattern_filepaths.push_back("v1.fas");
+  // pattern_filepaths.push_back("v2.fas");
+  // pattern_filepaths.push_back("v3.fas");
+  // pattern_filepaths.push_back("v4.fas");
+  // pattern_filepaths.push_back("v5.fas");
+  // pattern_filepaths.push_back("v6.fas");
+  // pattern_filepaths.push_back("v7.fas");
+  // pattern_filepaths.push_back("v8.fas");
+  // pattern_filepaths.push_back("v9.fas");
+  // pattern_filepaths.push_back("v10.fas");
+  //
+  // Test 2
+  pattern_filepaths.push_back("p5a.fas");
+  pattern_filepaths.push_back("p5b.fas");
+  pattern_filepaths.push_back("p5c.fas");
   // pattern_filepaths.push_back("p10a.fas");
   // pattern_filepaths.push_back("p10b.fas");
   // pattern_filepaths.push_back("p10c.fas");
@@ -105,15 +125,16 @@ void timeCPI2(const int num_trials /* = 1 */) {
   // pattern_filepaths.push_back("p25a.fas");
   // pattern_filepaths.push_back("p25b.fas");
   // pattern_filepaths.push_back("p25c.fas");
-  pattern_filepaths.push_back("p30a.fas");
-  pattern_filepaths.push_back("p30b.fas");
-  pattern_filepaths.push_back("p30c.fas");
+  // pattern_filepaths.push_back("p30a.fas");
+  // pattern_filepaths.push_back("p30b.fas");
+  // pattern_filepaths.push_back("p30c.fas");
   
   std::cout << "text, pattern, time, matches\n";
 
   for (std::vector< std::string >::iterator iter_t = text_filepaths.begin(); iter_t != text_filepaths.end(); iter_t++) {
     std::string text = readFile(test_dir + *iter_t);
     stripchar(text, '\n');
+    cpm::Cpi2 x(text);
     for (std::vector< std::string >::iterator iter_p = pattern_filepaths.begin(); iter_p != pattern_filepaths.end(); iter_p++) {
       std::string pattern = readFile(test_dir + *iter_p);
       std::set<int> matches;
@@ -121,7 +142,6 @@ void timeCPI2(const int num_trials /* = 1 */) {
       clock_t t0 = 0, t1 = 0;
       t0 = clock();
       for (int i = 0; i < num_trials; i++) {
-        cpm::Cpi2 x(text);
         matches = x.cmatch(pattern);
       }
       t1 = clock();
