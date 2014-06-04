@@ -4,16 +4,13 @@
 #include <cassert>
 
 #include "test.hpp"
-#include "cpm.hpp"
-#include "cpi2.hpp"
-
-/*
-  text = dbcadacadab$
-  patt = abcadabcad#
- */
+// #include "cpm.hpp"
+// #include "cpi2.hpp"
 
 int main(int argc, char* argv[]) {
-  // timeCPM();
+  std::cout << "Mult-V:\n";
+  timeMultv();
+  std::cout << "CPI2:\n";
   timeCPI2();
   
   // std::set<int> occ;

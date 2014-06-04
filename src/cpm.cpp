@@ -2,45 +2,40 @@
 #include <cassert>
 
 #include "cpm.hpp"
+#include "multv.hpp"
+#include "cpi2.hpp"
 #include "util.hpp"
 
 namespace cpm {
 
-  std::set<int> cpm(std::string text, std::string pattern) {
-    std::set<char> text_alpha = alphabet(text);
-    assert(text_alpha.find('$') == text_alpha.end() && text_alpha.find('#') == text_alpha.end());
-    text.push_back('$'); // add termination character
-    std::set<char> pattern_alpha = alphabet(pattern);
-    assert(pattern_alpha.find('$') == pattern_alpha.end() && pattern_alpha.find('#') == pattern_alpha.end());
-    pattern += pattern; // form PP
-    pattern.push_back('#'); // add termination character
-
-    WeinerST st;
-    st.insertText(text);
-    st.insertPattern(pattern, false);
-    return st.getMatches();
+  std::set<int> multvMatch(std::string text, std::string pattern) {
+    cpm::Multv multv_index(text);
+    return multv_index.cmatch(pattern);
   }
   
-  std::vector< std::set<int> > cpm(std::string text_filepath, std::vector<std::string> pattern_filepaths) {
+  std::vector< std::set<int> > multvMatch(std::string text_filepath, std::vector<std::string> pattern_filepaths) {
     std::string text = readFile(text_filepath);
-    // add termination character
-    std::set<char> text_alpha = alphabet(text);
-    assert(text_alpha.find('$') == text_alpha.end() && text_alpha.find('#') == text_alpha.end());
-    text.push_back('$');
-    //
-    WeinerST st;
-    st.insertText(text);
+    cpm::Multv multv_index(text);
     std::vector< std::set<int> > matches;
     for (std::vector<std::string>::iterator iter = pattern_filepaths.begin(); iter != pattern_filepaths.end(); iter++) {
       std::string pattern = readFile(*iter);
-      std::set<char> pattern_alpha = alphabet(pattern);
-      assert(pattern_alpha.find('$') == pattern_alpha.end() && pattern_alpha.find('#') == pattern_alpha.end());
-      pattern += pattern; // form PP
-      pattern.push_back('#'); // add termination character
+      multv_index.cmatch(pattern);
+    }
+    return matches;
+  }
 
-      st.insertPattern(pattern);
-      matches.push_back(st.getMatches());
-      st.removePattern();
+  std::set<int> cpi2Match(std::string text, std::string pattern) {
+    cpm::Cpi2 cpi2_index(text);
+    return cpi2_index.cmatch(pattern);
+  }
+  
+  std::vector< std::set<int> > cpi2Match(std::string text_filepath, std::vector<std::string> pattern_filepaths) {
+    std::string text = readFile(text_filepath);
+    cpm::Cpi2 cpi2_index(text);
+    std::vector< std::set<int> > matches;
+    for (std::vector<std::string>::iterator iter = pattern_filepaths.begin(); iter != pattern_filepaths.end(); iter++) {
+      std::string pattern = readFile(*iter);
+      cpi2_index.cmatch(pattern);
     }
     return matches;
   }

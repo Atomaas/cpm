@@ -45,6 +45,20 @@ std::string readFile(std::string filename) {
   return s;
 }
 
+std::string setToStr(std::set<int> x) {
+  std::string s = "{";
+  std::set<int>::iterator iter = x.begin();
+  if (iter != x.end()) {
+    s += intToStr(*iter);
+    iter++;
+    for (; iter != x.end(); iter++) {
+      s += ", " + intToStr(*iter);
+    }
+  }
+  s += "}";
+  return s;
+}
+
 // bool isFile(std::string path) {
 //   struct stat st;
 //   lstat(path.c_str(), &st);
